@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iran Wire — Feed</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #d4d4d4;
+      font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ---- HEADER ---- */
+    .header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .header h1 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e5a100;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .header .meta {
+      font-size: 11px;
+      color: #666;
+    }
+
+    .header .meta .fresh { color: #22c55e; }
+    .header .meta .stale { color: #f59e0b; }
+    .header .meta .very-stale { color: #ef4444; }
+
+    /* ---- AGGREGATION-ONLY BANNER ---- */
+    .banner {
+      background: #2a1500;
+      color: #ffb060;
+      padding: 8px 20px;
+      font-size: 11px;
+      border-bottom: 1px solid #3a1f00;
+      letter-spacing: 0.3px;
+    }
+
+    .banner strong { color: #ffd080; }
+
+    /* ---- CONTROLS ---- */
+    .controls {
+      padding: 10px 20px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .chip {
+      padding: 3px 10px;
+      border: 1px solid #333;
+      border-radius: 3px;
+      font-size: 11px;
+      cursor: pointer;
+      background: transparent;
+      color: #888;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .chip:hover { border-color: #555; color: #bbb; }
+    .chip.active { border-color: #e5a100; color: #e5a100; background: #1a1500; }
+
+    .separator {
+      width: 1px;
+      height: 20px;
+      background: #333;
+      margin: 0 4px;
+    }
+
+    .keyword-input {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 3px;
+      color: #d4d4d4;
+      font-family: inherit;
+      font-size: 11px;
+      padding: 3px 10px;
+      width: 200px;
+      outline: none;
+    }
+
+    .keyword-input:focus { border-color: #e5a100; }
+    .keyword-input::placeholder { color: #555; }
+
+    /* ---- FEED ---- */
+    .feed { padding: 0; }
+
+    .time-group {
+      padding: 6px 20px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #1a1a1a;
+      background: #0d0d0d;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .item {
+      padding: 5px 20px;
+      border-bottom: 1px solid #111;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      transition: background 0.1s;
+    }
+
+    .item:hover { background: #111; }
+
+    .item .time {
+      color: #555;
+      font-size: 11px;
+      min-width: 48px;
+      flex-shrink: 0;
+    }
+
+    .item .source-tag {
+      color: #8a8a8a;
+      font-size: 11px;
+      min-width: 150px;
+      flex-shrink: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .item .lang-tag {
+      color: #444;
+      font-size: 10px;
+      min-width: 18px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .item .forwarded {
+      color: #666;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .item .headline {
+      color: #d4d4d4;
+      flex: 1;
+    }
+
+    .item .headline a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .item .headline a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Keyword highlight */
+    .highlight {
+      background: #665500;
+      color: #ffdd00;
+      padding: 0 2px;
+      border-radius: 1px;
+    }
+
+    /* Translation tooltip hint */
+    .item .headline[title] { cursor: help; }
+
+    .empty-state {
+      padding: 40px 20px;
+      text-align: center;
+      color: #555;
+    }
+
+    .stats-bar {
+      padding: 6px 20px;
+      font-size: 10px;
+      color: #444;
+      border-top: 1px solid #1a1a1a;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-note {
+      padding: 10px 20px;
+      font-size: 10px;
+      color: #555;
+      border-top: 1px solid #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .footer-note a { color: #777; }
+
+    /* ---- MOBILE ---- */
+    @media (max-width: 768px) {
+      .item .source-tag { min-width: 80px; font-size: 10px; }
+      .item .lang-tag { display: none; }
+      .item .time { min-width: 40px; font-size: 10px; }
+      .keyword-input { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Iran Wire</h1>
+    <div class="meta">
+      Updated <span id="updated">--</span>
+      &middot; <span id="item-count">0</span> items
+      &middot; <span id="source-count">0</span>/<span id="source-total">0</span> sources
+    </div>
+  </div>
+
+  <div class="banner">
+    <strong>Aggregation only.</strong> Chronological feed of Iranian state channels, IRGC-adjacent outlets, diaspora, grassroots OSINT, and wires. Verify with the primary source before citing. Pre-review prototype.
+  </div>
+
+  <div class="controls">
+    <button class="chip active" data-lang="all">All</button>
+    <button class="chip" data-lang="fa">FA</button>
+    <button class="chip" data-lang="en">EN</button>
+    <div class="separator"></div>
+    <button class="chip" data-type="all">All sources</button>
+    <button class="chip" data-type="telegram">Telegram</button>
+    <button class="chip" data-type="rss">RSS / wires</button>
+    <div class="separator"></div>
+    <input type="text" class="keyword-input" id="keyword" placeholder="Keyword highlight...">
+  </div>
+
+  <div class="feed" id="feed"></div>
+  <div class="stats-bar" id="stats"></div>
+
+  <div class="footer-note">
+    Scrape cadence: every 5 minutes via GitHub Actions (best-effort, may drift 5&ndash;10 min).
+    Schema v3. Telegram layer via <code>t.me/s/</code> public previews &mdash; <strong>single undocumented surface, may break without warning</strong>.
+    Translation: Google free tier, non-newsroom-grade on Persian idiom.
+  </div>
+
+<script>
+  // ============================================
+  // STATE
+  // ============================================
+
+  let feedData = null;
+  let activeLang = 'all';
+  let activeType = 'all';
+  let keyword = '';
+
+  // Telegram-sourced items have a telegramMessageId; everything else is treated as rss.
+  function itemType(item) {
+    return item.telegramMessageId ? 'telegram' : 'rss';
+  }
+
+  // ============================================
+  // FETCH + RENDER
+  // ============================================
+
+  async function loadFeed() {
+    try {
+      const res = await window.fetch('feed.json?t=' + Date.now());
+      if (!res.ok) throw new Error('Feed not found');
+      feedData = await res.json();
+      updateHeader();
+      render();
+    } catch (e) {
+      document.getElementById('feed').innerHTML =
+        '<div class="empty-state">No feed data yet. Run <code>node scrape-feed.js</code> to generate.</div>';
+    }
+  }
+
+  function updateHeader() {
+    if (!feedData) return;
+    const updatedEl = document.getElementById('updated');
+    const ageMin = (Date.now() - new Date(feedData.updated).getTime()) / 60000;
+    updatedEl.textContent = timeAgo(new Date(feedData.updated));
+    updatedEl.className = ageMin < 7 ? 'fresh' : ageMin < 20 ? 'stale' : 'very-stale';
+    document.getElementById('item-count').textContent = feedData.items.length;
+    if (feedData.sourceStats) {
+      document.getElementById('source-count').textContent = feedData.sourceStats.succeeded;
+      document.getElementById('source-total').textContent = feedData.sourceStats.scraped;
+    }
+  }
+
+  function render() {
+    if (!feedData || !feedData.items) return;
+
+    // Apply filters
+    let items = feedData.items;
+    if (activeLang !== 'all') {
+      items = items.filter(i => (i.languagePreTranslation || i.language) === activeLang);
+    }
+    if (activeType !== 'all') {
+      items = items.filter(i => itemType(i) === activeType);
+    }
+
+    // Group by time bucket
+    const now = Date.now();
+    const ONE_HOUR = 3600000;
+    const SIX_HOURS = 6 * ONE_HOUR;
+
+    const groups = [
+      { label: 'Last hour', items: [] },
+      { label: 'Last 6 hours', items: [] },
+      { label: 'Earlier', items: [] }
+    ];
+
+    for (const item of items) {
+      const age = now - new Date(item.date).getTime();
+      if (age < ONE_HOUR) groups[0].items.push(item);
+      else if (age < SIX_HOURS) groups[1].items.push(item);
+      else groups[2].items.push(item);
+    }
+
+    let html = '';
+    for (const group of groups) {
+      if (group.items.length === 0) continue;
+      html += `<div class="time-group">${group.label} (${group.items.length})</div>`;
+      for (const item of group.items) {
+        html += renderItem(item);
+      }
+    }
+
+    if (html === '') {
+      html = '<div class="empty-state">No items match your filters.</div>';
+    }
+
+    document.getElementById('feed').innerHTML = html;
+
+    // Stats — per-source counts across the whole feed
+    const sourceCounts = {};
+    for (const item of feedData.items) {
+      sourceCounts[item.source] = (sourceCounts[item.source] || 0) + 1;
+    }
+    const statsText = Object.entries(sourceCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join('  |  ');
+    document.getElementById('stats').textContent = statsText;
+  }
+
+  function renderItem(item) {
+    const d = new Date(item.date);
+    const time = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+    const lang = (item.languagePreTranslation || item.language || 'en').toUpperCase();
+
+    // Keyword highlight on translated headline
+    let headline = escapeHtml(item.headline);
+    if (keyword) {
+      const re = new RegExp('(' + escapeRegex(keyword) + ')', 'gi');
+      headline = headline.replace(re, '<span class="highlight">$1</span>');
+    }
+
+    // Title attr: show original pre-translation text if translated
+    const titleAttr = item.headlineOriginal
+      ? ` title="${escapeAttr(item.headlineOriginal)}"`
+      : '';
+
+    // Forwarded indicator for Telegram reposts — editorial transparency
+    const fwd = item.forwarded ? '<span class="forwarded" title="Forwarded from another channel">↻</span>' : '';
+
+    return `<div class="item">
+      <span class="time">${time}</span>
+      <span class="source-tag">${escapeHtml(item.source)}</span>
+      <span class="lang-tag">${lang}</span>
+      ${fwd}
+      <span class="headline"${titleAttr}><a href="${escapeAttr(item.url)}" target="_blank" rel="noopener">${headline}</a></span>
+    </div>`;
+  }
+
+  // ============================================
+  // UTILS
+  // ============================================
+
+  function timeAgo(date) {
+    const secs = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (secs < 60) return 'just now';
+    if (secs < 3600) return Math.floor(secs / 60) + 'm ago';
+    if (secs < 86400) return Math.floor(secs / 3600) + 'h ago';
+    return Math.floor(secs / 86400) + 'd ago';
+  }
+
+  function escapeHtml(s) {
+    if (!s) return '';
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function escapeAttr(s) {
+    if (!s) return '';
+    return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function escapeRegex(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  // ============================================
+  // EVENT HANDLERS
+  // ============================================
+
+  document.querySelectorAll('.chip[data-lang]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-lang]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeLang = chip.dataset.lang;
+      render();
+    });
+  });
+
+  document.querySelectorAll('.chip[data-type]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-type]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeType = chip.dataset.type;
+      render();
+    });
+  });
+
+  document.getElementById('keyword').addEventListener('input', (e) => {
+    keyword = e.target.value.trim();
+    render();
+  });
+
+  // ============================================
+  // INIT + AUTO-REFRESH
+  // ============================================
+
+  loadFeed();
+  setInterval(loadFeed, 60000);
+  setInterval(updateHeader, 15000);
+</script>
+
+</body>
+</html>

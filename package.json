@@ -1,0 +1,13 @@
+{
+  "name": "iran-briefing",
+  "version": "0.1.0",
+  "description": "Iran war coverage live feed. Persian Telegram + Iran-focused OSINT + wires.",
+  "private": true,
+  "scripts": {
+    "scrape": "node scrape-feed.js",
+    "serve": "python3 -m http.server 8080"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,61 @@
+name: Scrape feed
+
+# Runs every 5 minutes via cron. GitHub-hosted runners are best-effort —
+# expect 5-10 min drift under load. That's acceptable for a live-blog-pace
+# tool as long as the UI shows the actual last-refresh time.
+#
+# Also triggerable manually via workflow_dispatch.
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+# Cancel in-flight runs when a new one starts. Prevents the race that
+# produced the initial merge-conflict failure (concurrent push + dispatch).
+concurrency:
+  group: feed-scrape
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Always fetch latest main, not a shallow snapshot, so the final
+          # push doesn't need a rebase dance.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync with latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Scrape feed
+        run: node scrape-feed.js
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feed.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Feed update: $(date -u +'%Y-%m-%d %H:%M UTC')"
+          # If push is rejected (another run raced us), exit 0 — the next
+          # cron run will re-scrape from the winning state.
+          git push || echo "Push rejected — likely concurrent run won. Next cron will catch up."

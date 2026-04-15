@@ -1,0 +1,279 @@
+{
+  "metadata": {
+    "name": "Iran Briefing",
+    "slug": "iran-briefing",
+    "owner": "Iran war coverage",
+    "timezone": "America/New_York",
+    "description": "Iran war coverage live feed. Persian Telegram, Iranian state media, OSINT, Persian-independent, and wires. Chronological aggregation — no reliability tagging in v1. Never cite without verifying primary source.",
+    "schemaVersion": 3,
+    "reviewed": false,
+    "reviewNote": "Pre-review prototype. Source list has not undergone editorial review. Do not share externally or cite content in published work before review."
+  },
+  "sources": [
+    { "_comment": "=== IRANIAN STATE — MOIS and regime organs ===" },
+    {
+      "id": "tg_mfairan",
+      "name": "MFA Iran",
+      "type": "telegram",
+      "url": "https://t.me/s/MFAIran",
+      "handle": "MFAIran",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "Iran Ministry of Foreign Affairs official channel.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_irna_en",
+      "name": "IRNA English",
+      "type": "telegram",
+      "url": "https://t.me/s/Irna_en",
+      "handle": "Irna_en",
+      "language": "en",
+      "priority": "primary",
+      "notes": "Islamic Republic News Agency English-language channel.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_isna",
+      "name": "ISNA",
+      "type": "telegram",
+      "url": "https://t.me/s/isna94",
+      "handle": "isna94",
+      "language": "fa",
+      "priority": "secondary",
+      "notes": "Iranian Students' News Agency. Semi-official.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_paddolat",
+      "name": "Pad Dolat (Government)",
+      "type": "telegram",
+      "url": "https://t.me/s/PadDolat",
+      "handle": "PadDolat",
+      "language": "fa",
+      "priority": "secondary",
+      "notes": "Executive-branch government messaging.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_akhbar_montakhab",
+      "name": "Akhbar Montakhab",
+      "type": "telegram",
+      "url": "https://t.me/s/akhbar_montakhab",
+      "handle": "akhbar_montakhab",
+      "language": "fa",
+      "priority": "secondary",
+      "notes": "Official-channel aggregator.",
+      "reviewed": false
+    },
+
+    { "_comment": "=== IRGC-ADJACENT ===" },
+    {
+      "id": "tg_farsna",
+      "name": "Fars News",
+      "type": "telegram",
+      "url": "https://t.me/s/farsna",
+      "handle": "farsna",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "Hardline agency closely tied to IRGC.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_tasnim",
+      "name": "Tasnim News",
+      "type": "telegram",
+      "url": "https://t.me/s/Tasnimnews",
+      "handle": "Tasnimnews",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "Security-apparatus-adjacent. Often broadcasts IRGC messages.",
+      "reviewed": false
+    },
+
+    { "_comment": "=== DIASPORA — Foreign-funded Iran coverage ===" },
+    {
+      "id": "tg_bbcpersian",
+      "name": "BBC Persian",
+      "type": "telegram",
+      "url": "https://t.me/s/bbcpersian",
+      "handle": "bbcpersian",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "UK state-funded Persian service. ~793K subs.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_iranintl",
+      "name": "Iran International",
+      "type": "telegram",
+      "url": "https://t.me/s/IranintlTV",
+      "handle": "IranintlTV",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "Diaspora network, Saudi-connected funding. Designated 'hostile entity' by Tehran.",
+      "reviewed": false
+    },
+
+    { "_comment": "=== GRASSROOTS / IN-COUNTRY CITIZEN REPORTING ===" },
+    {
+      "id": "tg_vahidonline",
+      "name": "Vahid Online",
+      "type": "telegram",
+      "url": "https://t.me/s/VahidOnline",
+      "handle": "VahidOnline",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "Documents protests via citizen footage.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_hengaw",
+      "name": "Hengaw Organization",
+      "type": "telegram",
+      "url": "https://t.me/s/Hengaw_Org",
+      "handle": "Hengaw_Org",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "Kurdish-region focus: political detainees, cross-border incidents.",
+      "reviewed": false
+    },
+    {
+      "id": "tg_haalvsh",
+      "name": "HAALVSH",
+      "type": "telegram",
+      "url": "https://t.me/s/haalvsh",
+      "handle": "haalvsh",
+      "language": "fa",
+      "priority": "secondary",
+      "notes": "Sistan & Baluchestan province focus.",
+      "reviewed": false
+    },
+
+    { "_comment": "=== OSINT / FORENSICS / HUMAN RIGHTS ===" },
+    {
+      "id": "hrana",
+      "name": "HRANA",
+      "type": "rss",
+      "url": "https://www.en-hrana.org/feed/",
+      "language": "en",
+      "priority": "primary",
+      "notes": "Daily arrest and prisoner documentation.",
+      "reviewed": false
+    },
+    {
+      "id": "iranwire",
+      "name": "IranWire",
+      "type": "rss",
+      "url": "https://iranwire.com/en/feed/",
+      "language": "en",
+      "priority": "primary",
+      "notes": "Fact-checking and disinformation deconstruction. Founded by Maziar Bahari.",
+      "reviewed": false
+    },
+    {
+      "id": "netblocks",
+      "name": "NetBlocks",
+      "type": "rss",
+      "url": "https://netblocks.org/feed/",
+      "language": "en",
+      "priority": "primary",
+      "notes": "Real-time internet-connectivity verification.",
+      "reviewed": false
+    },
+    {
+      "id": "ihrngo",
+      "name": "Iran Human Rights (IHRNGO)",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=when:24h+site:iranhr.net&ceid=US:en&hl=en-US&gl=US",
+      "language": "en",
+      "priority": "secondary",
+      "notes": "Execution and protest-fatality statistics. Google News fallback.",
+      "reviewed": false
+    },
+    {
+      "id": "chri",
+      "name": "Center for Human Rights in Iran",
+      "type": "rss",
+      "url": "https://iranhumanrights.org/feed/",
+      "language": "en",
+      "priority": "secondary",
+      "notes": "Legal analysis via in-country networks.",
+      "reviewed": false
+    },
+    {
+      "id": "filterwatch",
+      "name": "Filterwatch",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=when:48h+site:filter.watch&ceid=US:en&hl=en-US&gl=US",
+      "language": "en",
+      "priority": "secondary",
+      "notes": "Censorship architecture analysis. Google News fallback.",
+      "reviewed": false
+    },
+
+    { "_comment": "=== PERSIAN-LANGUAGE INDEPENDENT ===" },
+    {
+      "id": "radiozamaneh",
+      "name": "Radio Zamaneh",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=when:24h+site:radiozamaneh.com&ceid=US:en&hl=en-US&gl=US",
+      "language": "fa",
+      "priority": "primary",
+      "notes": "Amsterdam-based Persian-language independent. Google News fallback.",
+      "reviewed": false
+    },
+    {
+      "id": "kayhanlondon",
+      "name": "Kayhan London",
+      "type": "rss",
+      "url": "https://kayhan.london/feed/",
+      "language": "fa",
+      "priority": "secondary",
+      "notes": "London-based Persian daily.",
+      "reviewed": false
+    },
+
+    { "_comment": "=== INTERNATIONAL WIRES — Iran-filtered ===" },
+    {
+      "id": "reuters_iran",
+      "name": "Reuters Iran",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=when:24h+(Iran+OR+Tehran+OR+IRGC+OR+Hezbollah+OR+%22Islamic+Republic%22)+site:reuters.com&ceid=US:en&hl=en-US&gl=US",
+      "language": "en",
+      "priority": "primary",
+      "notes": "Reuters via Google News, Iran-filtered.",
+      "reviewed": false
+    },
+    {
+      "id": "ap_iran",
+      "name": "AP Iran",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=when:24h+(Iran+OR+Tehran+OR+IRGC+OR+Hezbollah+OR+%22Islamic+Republic%22)+site:apnews.com&ceid=US:en&hl=en-US&gl=US",
+      "language": "en",
+      "priority": "primary",
+      "notes": "AP via Google News, Iran-filtered.",
+      "reviewed": false
+    },
+    {
+      "id": "bloomberg_iran",
+      "name": "Bloomberg Iran",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=when:24h+(Iran+OR+Tehran+OR+IRGC+OR+Hormuz+OR+oil)+site:bloomberg.com&ceid=US:en&hl=en-US&gl=US",
+      "language": "en",
+      "priority": "secondary",
+      "notes": "Bloomberg via Google News. Energy/market-focused.",
+      "reviewed": false
+    },
+    {
+      "id": "bbc_middleeast",
+      "name": "BBC Middle East",
+      "type": "rss",
+      "url": "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
+      "language": "en",
+      "priority": "primary",
+      "notes": "BBC Middle East desk.",
+      "reviewed": false
+    }
+  ]
+}
