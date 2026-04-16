@@ -1,0 +1,14 @@
+name = "iran-briefing-cron"
+main = "worker.js"
+compatibility_date = "2024-10-01"
+
+# Cloudflare cron triggers — fires the scheduled() handler.
+# Every 1 min. GitHub workflow_dispatch is not subject to the same
+# throttling as schedule events, so this cadence is honored reliably.
+[triggers]
+crons = ["* * * * *"]
+
+[vars]
+REPO_OWNER = "wtv1gnf3hbk"
+REPO_NAME = "iran-briefing"
+WORKFLOW_FILE = "feed.yml"

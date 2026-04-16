@@ -7,15 +7,21 @@ name: Scrape feed
 # Also triggerable manually via workflow_dispatch.
 
 on:
+  # GitHub schedule events on public repos are heavily throttled (we observed
+  # 60-130 min gaps from a */5 cron). Kept at */15 as a backup safety net in
+  # case the Cloudflare Worker dies; primary cadence is the Worker firing
+  # workflow_dispatch every minute.
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
-# Cancel in-flight runs when a new one starts. Prevents the race that
-# produced the initial merge-conflict failure (concurrent push + dispatch).
+# Serialize runs. The Worker fires every minute; if a previous scrape is
+# still mid-flight, queue the new one rather than cancel — the fetch+reset
+# step at the start of each run handles the merge cleanly, so queueing is safe
+# and avoids losing scrape work.
 concurrency:
   group: feed-scrape
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
