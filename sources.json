@@ -175,10 +175,10 @@
       "id": "netblocks",
       "name": "NetBlocks",
       "type": "rss",
-      "url": "https://netblocks.org/feed/",
+      "url": "https://news.google.com/rss/search?q=when:24h+site:netblocks.org&ceid=US:en&hl=en-US&gl=US",
       "language": "en",
       "priority": "primary",
-      "notes": "Real-time internet-connectivity verification.",
+      "notes": "Real-time connectivity verification. Direct RSS began returning 403 on 2026-04-17 — switched to Google News fallback.",
       "reviewed": false
     },
     {

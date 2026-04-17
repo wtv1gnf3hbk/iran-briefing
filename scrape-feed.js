@@ -101,8 +101,21 @@ async function translateText(text) {
   if (!text || text.length === 0) return text;
   // Google Translate's free tier has an unpublished char cap. Truncate defensively.
   const MAX_CHARS = 4800;
-  const input = text.length > MAX_CHARS ? text.slice(0, MAX_CHARS) : text;
-  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(input)}`;
+  let input = text.length > MAX_CHARS ? text.slice(0, MAX_CHARS) : text;
+  // String.slice() cuts at UTF-16 code units. Persian/Arabic/emoji can occupy
+  // surrogate pairs (two code units). If we cut a pair in half, encodeURIComponent
+  // throws URIError: URI malformed. Strip any trailing lone surrogate defensively.
+  if (input.length > 0 && input.charCodeAt(input.length - 1) >= 0xD800 && input.charCodeAt(input.length - 1) <= 0xDBFF) {
+    input = input.slice(0, -1);
+  }
+  let encoded;
+  try {
+    encoded = encodeURIComponent(input);
+  } catch (e) {
+    // Still malformed somehow — fall back to original untranslated text.
+    return text;
+  }
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encoded}`;
   try {
     const response = await fetch(url, { timeout: 10000 });
     const data = JSON.parse(response);
