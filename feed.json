@@ -1,13 +1,134 @@
 {
   "schemaVersion": 3,
-  "updated": "2026-04-19T12:14:51.940Z",
+  "updated": "2026-04-19T12:15:53.196Z",
   "itemCount": 200,
   "sourceStats": {
     "scraped": 24,
-    "succeeded": 24,
-    "failed": 0
+    "succeeded": 0,
+    "failed": 24
   },
-  "failed": [],
+  "failed": [
+    {
+      "name": "MFA Iran",
+      "id": "tg_mfairan",
+      "error": "Timeout"
+    },
+    {
+      "name": "IRNA English",
+      "id": "tg_irna_en",
+      "error": "Timeout"
+    },
+    {
+      "name": "ISNA",
+      "id": "tg_isna",
+      "error": "Timeout"
+    },
+    {
+      "name": "Pad Dolat (Government)",
+      "id": "tg_paddolat",
+      "error": "Timeout"
+    },
+    {
+      "name": "Akhbar Montakhab",
+      "id": "tg_akhbar_montakhab",
+      "error": "Timeout"
+    },
+    {
+      "name": "Fars News",
+      "id": "tg_farsna",
+      "error": "Timeout"
+    },
+    {
+      "name": "Tasnim News",
+      "id": "tg_tasnim",
+      "error": "Timeout"
+    },
+    {
+      "name": "BBC Persian",
+      "id": "tg_bbcpersian",
+      "error": "Timeout"
+    },
+    {
+      "name": "Iran International",
+      "id": "tg_iranintl",
+      "error": "Timeout"
+    },
+    {
+      "name": "Vahid Online",
+      "id": "tg_vahidonline",
+      "error": "Timeout"
+    },
+    {
+      "name": "Hengaw Organization",
+      "id": "tg_hengaw",
+      "error": "Timeout"
+    },
+    {
+      "name": "HAALVSH",
+      "id": "tg_haalvsh",
+      "error": "Timeout"
+    },
+    {
+      "name": "HRANA",
+      "id": "hrana",
+      "error": "Timeout"
+    },
+    {
+      "name": "IranWire",
+      "id": "iranwire",
+      "error": "Timeout"
+    },
+    {
+      "name": "NetBlocks",
+      "id": "netblocks",
+      "error": "Timeout"
+    },
+    {
+      "name": "Iran Human Rights (IHRNGO)",
+      "id": "ihrngo",
+      "error": "Timeout"
+    },
+    {
+      "name": "Center for Human Rights in Iran",
+      "id": "chri",
+      "error": "Timeout"
+    },
+    {
+      "name": "Filterwatch",
+      "id": "filterwatch",
+      "error": "Timeout"
+    },
+    {
+      "name": "Radio Zamaneh",
+      "id": "radiozamaneh",
+      "error": "Timeout"
+    },
+    {
+      "name": "Kayhan London",
+      "id": "kayhanlondon",
+      "error": "Timeout"
+    },
+    {
+      "name": "Reuters Iran",
+      "id": "reuters_iran",
+      "error": "Timeout"
+    },
+    {
+      "name": "AP Iran",
+      "id": "ap_iran",
+      "error": "Timeout"
+    },
+    {
+      "name": "Bloomberg Iran",
+      "id": "bloomberg_iran",
+      "error": "Timeout"
+    },
+    {
+      "name": "BBC Middle East",
+      "id": "bbc_middleeast",
+      "error": "Timeout"
+    }
+  ],
   "items": [
     {
       "schemaVersion": 3,
